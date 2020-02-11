@@ -1,6 +1,9 @@
 import { Application } from 'express';
 import { Controller } from './main.controller';
 import { UserService } from './services/user.service';
+import { ReviewService } from './services/review.service';
+import { OrderService } from './services/order.service';
+import { ProductService } from './services/product.service';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
@@ -17,7 +20,8 @@ class App {
     this._setConfig();
     this._setMongoConfig();
 
-    this.userController = new Controller(this.app, new UserService());
+    this.userController = new Controller(this.app, new UserService(),
+      new OrderService(), new ReviewService(), new ProductService());
   }
 
   private _setConfig() {
@@ -28,7 +32,7 @@ class App {
 
   private _setMongoConfig() {
     mongoose.Promise = global.Promise;
-    mongoose.connect('mongodb://localhost:27017/Pokemon', {
+    mongoose.connect('mongodb://localhost:27017/bulkmall', {
       useNewUrlParser: true
     });
   }

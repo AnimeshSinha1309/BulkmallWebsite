@@ -1,0 +1,59 @@
+import { Document, Mongoose, MongooseDocument } from 'mongoose';
+import { Request, Response } from 'express';
+
+import { IOrderService } from '../interfaces/order-service.interface';
+import { Order } from '../models/order.model';
+import { WELCOME_MESSAGE } from '../constants/global.constants';
+
+export class OrderService implements IOrderService {
+  public dummyMessage(req: Request, res: Response) {
+    res.status(200).send(WELCOME_MESSAGE);
+  }
+
+  public listOrders(req: Request, res: Response) {
+    Order.find({}, (error: Error, order: MongooseDocument) => {
+      if (error) {
+        res.send(error);
+      }
+      res.json(order);
+    });
+  }
+
+  public insertOrder(req: Request, res: Response) {
+    const newOrder = new Order(req.body);
+    newOrder.save((error: Error, order: MongooseDocument) => {
+      if (error) {
+        res.send(error);
+      }
+      res.json(order);
+    });
+  }
+
+  public deleteOrder(req: Request, res: Response) {
+    const orderID = req.params.id;
+    Order.findByIdAndDelete(orderID, (error: Error, deleted: any) => {
+      if (error) {
+        res.send(error);
+      }
+      const message = deleted ? 'Deleted successfully' : 'Order not found :(';
+      res.status(200).send(message);
+    });
+  }
+
+  public updateOrder(req: Request, res: Response) {
+    const orderId = req.params.id;
+    Order.findByIdAndUpdate(
+      orderId,
+      req.body,
+      (error: Error, order: any) => {
+        if (error) {
+          res.send(error);
+        }
+        const message = order
+          ? 'Updated successfully'
+          : 'Order not found :(';
+        res.send(message);
+      }
+    );
+  }
+}
