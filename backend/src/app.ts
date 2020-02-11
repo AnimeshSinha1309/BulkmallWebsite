@@ -1,22 +1,23 @@
 import { Application } from 'express';
 import { Controller } from './main.controller';
-import { PokeService } from './services/pokemon.service';
+import { UserService } from './services/user.service';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
+import { User } from './models/user.model';
 
 
 class App {
   public app: Application;
-  public pokeController: Controller;
+  public userController: Controller;
 
   constructor() {
     this.app = express();
     this._setConfig();
     this._setMongoConfig();
 
-    this.pokeController = new Controller(this.app, new PokeService());
+    this.userController = new Controller(this.app, new UserService());
   }
 
   private _setConfig() {

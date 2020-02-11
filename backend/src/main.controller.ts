@@ -1,18 +1,18 @@
 import { Application } from 'express';
-import { IPokemonService } from './interfaces/pokemon-service.interface';
+import { IUserService } from './interfaces/user-service.interface';
 
 export class Controller {
-  constructor(private app: Application, private pokeService: IPokemonService) {
+  constructor(private app: Application, private userService: IUserService) {
     this.routes();
   }
 
   public routes() {
-    this.app.route('/').get(this.pokeService.welcomeMessage);
-    this.app.route('/pokemons').get(this.pokeService.getAllPokemon);
-    this.app.route('/pokemon').post(this.pokeService.addNewPokemon);
+    this.app.route('/user/dummy').get(this.userService.dummyMessage);
+    this.app.route('/user/list').get(this.userService.listUsers);
+    this.app.route('/user/insert').post(this.userService.insertUser);
     this.app
-      .route('/pokemon/:id')
-      .delete(this.pokeService.deletePokemon)
-      .put(this.pokeService.updatePokemon);
+      .route('/user/edit/:id')
+      .delete(this.userService.deleteUser)
+      .put(this.userService.updateUser);
   }
 }

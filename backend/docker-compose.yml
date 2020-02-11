@@ -8,6 +8,6 @@ services:
     volumes:
       - ./pokeData:/data/db
     environment:
-      - MONGO_INITDB_DATABASE= Pokemon
+      - MONGO_INITDB_DATABASE=bulkmall
     ports:
       - 27017:27017
