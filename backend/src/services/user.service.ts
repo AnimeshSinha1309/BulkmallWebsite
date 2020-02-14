@@ -21,6 +21,7 @@ export class UserService implements IUserService {
 
   public insertUser(req: Request, res: Response) {
     const newUser = new User(req.body);
+    console.log(newUser)
     newUser.save((error: Error, user: MongooseDocument) => {
       if (error) {
         res.send(error);

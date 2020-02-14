@@ -7,6 +7,8 @@ import Sell from './components/Sell';
 import Purchases from './components/Purchases';
 import Sales from './components/Sales';
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 function App() {
   return (
     <Router>
