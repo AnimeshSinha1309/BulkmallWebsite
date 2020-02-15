@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../actions/authActions";
+import classnames from "classnames";
+
+
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,20 +20,24 @@ function Register() {
     return email.length > 0 && password.length > 0;
   }
 
+  function componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(email, password, name, type, gender, pconfirm);
-    const payload = "name=" + name + "&email=" + email + "&type=" +
-      type + "&gender=" + gender + "&password=" + password + "&pconfirm=" + pconfirm;
-    fetch('http://localhost:9001/register', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: payload
-    }).then(res => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch(console.log)
+
+    const newUser = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      pconfirm: this.state.pconfirm
+    };
+    this.props.registerUser(newUser, this.props.history);
   }
 
   return (
@@ -98,4 +109,16 @@ function Register() {
   );
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Register));
