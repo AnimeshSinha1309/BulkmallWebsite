@@ -97,9 +97,6 @@ export class UserService implements IUserService {
     });
   }
 
-  // @route POST api/users/login
-  // @desc Login user and return JWT token
-  // @access Public
   public login(req: Request, res: Response) {
     const error: string = validateLoginInput(req.body);
     // Check validation
@@ -109,7 +106,6 @@ export class UserService implements IUserService {
     const email = req.body.email;
     const password = req.body.password;
     // Find user by email
-    console.log(email);
     User.findOne({ 'email': email }).then((user: any) => {
       // Check if user exists
       if (!user) {
