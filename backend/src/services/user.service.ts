@@ -9,6 +9,7 @@ import { WELCOME_MESSAGE } from '../constants/global.constants';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 const router = express.Router();
+import { JWT_PASSWORD } from '../constants/global.constants'
 import { validateRegisterInput } from '../validators/register.service'
 import { validateLoginInput } from '../validators/login.service'
 
@@ -96,7 +97,51 @@ export class UserService implements IUserService {
     });
   }
 
+  // @route POST api/users/login
+  // @desc Login user and return JWT token
+  // @access Public
   public login(req: Request, res: Response) {
-
+    const error: string = validateLoginInput(req.body);
+    // Check validation
+    if (error.length != 0) {
+      return res.status(400).json(error);
+    }
+    const email = req.body.email;
+    const password = req.body.password;
+    // Find user by email
+    console.log(email);
+    User.findOne({ 'email': email }).then((user: any) => {
+      // Check if user exists
+      if (!user) {
+        return res.status(404).json({ error: "Email not found" });
+      }
+      // Check password
+      bcrypt.compare(password, user.password).then(isMatch => {
+        if (isMatch) {
+          // User matched
+          // Create JWT Payload
+          const payload = {
+            id: user.id,
+            name: user.name
+          };
+          // Sign token
+          jwt.sign(
+            payload,
+            JWT_PASSWORD,
+            { expiresIn: 31556926 /* 1 year in seconds */ },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
+            }
+          );
+        } else {
+          return res
+            .status(400)
+            .json({ error: "Password incorrect" });
+        }
+      });
+    });
   }
 }

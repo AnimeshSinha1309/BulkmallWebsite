@@ -12,29 +12,28 @@ export class Controller {
   }
 
   public routes() {
+    // Register and Login
+    this.app.route('/login').post(this.userService.login);
     this.app.route('/register').post(this.userService.register);
-    this.app.route('/user/dummy').get(this.userService.dummyMessage);
+    // CRUD Operations routing
     this.app.route('/user/list').get(this.userService.listUsers);
     this.app.route('/user/insert').post(this.userService.insertUser);
     this.app
       .route('/user/edit/:id')
       .delete(this.userService.deleteUser)
       .put(this.userService.updateUser);
-    this.app.route('/product/dummy').get(this.productService.dummyMessage);
     this.app.route('/product/list').get(this.productService.listProducts);
     this.app.route('/product/insert').post(this.productService.insertProduct);
     this.app
       .route('/product/edit/:id')
       .delete(this.productService.deleteProduct)
       .put(this.productService.updateProduct);
-    this.app.route('/order/dummy').get(this.orderService.dummyMessage);
     this.app.route('/order/list').get(this.orderService.listOrders);
     this.app.route('/order/insert').post(this.orderService.insertOrder);
     this.app
       .route('/order/edit/:id')
       .delete(this.orderService.deleteOrder)
       .put(this.orderService.updateOrder);
-    this.app.route('/review/dummy').get(this.reviewService.dummyMessage);
     this.app.route('/review/list').get(this.reviewService.listReviews);
     this.app.route('/review/insert').post(this.reviewService.insertReview);
     this.app
