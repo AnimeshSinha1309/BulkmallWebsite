@@ -1,47 +1,54 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    }
   }
 
-  function handleSubmit(event) {
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  handleSubmit(event) {
     event.preventDefault();
-    console.log(email, password);
+    console.log(this.state.email, this.state.password);
   }
 
-  return (
-    <div className="Login container">
-      <div>
-        <form onSubmit={handleSubmit} className="col-lg-5 offset-lg-4">
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              type="password"
-            />
-          </FormGroup>
-          <Button block bsSize="large" disabled={!validateForm()} type="submit" className="btn-primary">
-            Login
+  render() {
+    return (
+      <div className="Login container">
+        <div>
+          <form onSubmit={this.handleSubmit} className="col-lg-5 offset-lg-4">
+            <FormGroup controlId="email" bsSize="large">
+              <ControlLabel>Email</ControlLabel>
+              <FormControl
+                autoFocus
+                type="email"
+                value={this.email}
+                onChange={e => this.setState({ email: e.target.value })}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                value={this.password}
+                onChange={e => this.setState({ password: e.target.value })}
+                type="password"
+              />
+            </FormGroup>
+            <Button block bsSize="large" disabled={!this.validateForm()} type="submit" className="btn-primary">
+              Login
           </Button>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Login;
