@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { withRouter } from 'react-router';
 
 class Register extends React.Component {
   constructor(props) {
@@ -13,6 +13,8 @@ class Register extends React.Component {
       type: "customer",
       gender: "male",
     }
+    this.validateForm = this.validateForm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
@@ -30,7 +32,8 @@ class Register extends React.Component {
       body: payload
     }).then(res => res.json())
       .then((data) => {
-        return <Redirect to='/login' />
+        console.log(data);
+        this.props.history.push('/login')
       })
       .catch(console.log)
   }
@@ -106,4 +109,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default withRouter(Register);

@@ -13,9 +13,7 @@ function Buy() {
           Learn Login
         </a>
       </header>
-      <body>
-        <h1>Body</h1>
-      </body>
+      <h1>Body</h1>
     </div>
   );
 }

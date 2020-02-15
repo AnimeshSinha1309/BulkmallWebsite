@@ -1,5 +1,4 @@
-import express from 'express'
-import { Document, Mongoose, MongooseDocument } from 'mongoose';
+import { MongooseDocument } from 'mongoose';
 import { Request, Response } from 'express';
 
 import { IUserService } from '../interfaces/user-service.interface';
@@ -8,7 +7,7 @@ import { WELCOME_MESSAGE } from '../constants/global.constants';
 
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-const router = express.Router();
+
 import { JWT_PASSWORD } from '../constants/global.constants'
 import { validateRegisterInput } from '../validators/register.service'
 import { validateLoginInput } from '../validators/login.service'
@@ -29,7 +28,6 @@ export class UserService implements IUserService {
 
   public insertUser(req: Request, res: Response) {
     const newUser = new User(req.body);
-    console.log(newUser)
     newUser.save((error: Error, user: MongooseDocument) => {
       if (error) {
         res.send(error);
@@ -67,10 +65,10 @@ export class UserService implements IUserService {
   }
 
   public register(req: Request, res: Response) {
-    console.log("Inserting: ", req.body);
     const error: string = validateRegisterInput(req.body);
     // Check validation
     if (error.length != 0) {
+      console.log(error);
       return res.status(400).json({ error: error });
     }
     User.findOne({ email: req.body.email }).then(user => {
@@ -97,9 +95,6 @@ export class UserService implements IUserService {
     });
   }
 
-  // @route POST api/users/login
-  // @desc Login user and return JWT token
-  // @access Public
   public login(req: Request, res: Response) {
     const error: string = validateLoginInput(req.body);
     // Check validation
@@ -109,11 +104,10 @@ export class UserService implements IUserService {
     const email = req.body.email;
     const password = req.body.password;
     // Find user by email
-    console.log(email);
     User.findOne({ 'email': email }).then((user: any) => {
       // Check if user exists
       if (!user) {
-        return res.status(404).json({ error: "Email not found" });
+        return res.status(400).json({ error: "Email not found" });
       }
       // Check password
       bcrypt.compare(password, user.password).then(isMatch => {
@@ -122,20 +116,22 @@ export class UserService implements IUserService {
           // Create JWT Payload
           const payload = {
             id: user.id,
-            name: user.name
+            name: user.name,
+            email: user.email
           };
+          return res.status(200).json(payload);
           // Sign token
-          jwt.sign(
-            payload,
-            JWT_PASSWORD,
-            { expiresIn: 31556926 /* 1 year in seconds */ },
-            (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
-            }
-          );
+          // jwt.sign(
+          //   payload,
+          //   JWT_PASSWORD,
+          //   { expiresIn: 31556926 /* 1 year in seconds */ },
+          //   (err, token) => {
+          //     res.json({
+          //       success: true,
+          //       token: "Bearer " + token
+          //     });
+          //   }
+          // );
         } else {
           return res
             .status(400)

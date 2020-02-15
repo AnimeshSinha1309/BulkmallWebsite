@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { withRouter } from 'react-router';
 
 class Login extends React.Component {
   constructor(props) {
@@ -8,6 +9,8 @@ class Login extends React.Component {
       email: "",
       password: ""
     }
+    this.validateForm = this.validateForm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
@@ -16,7 +19,23 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.email, this.state.password);
+    const payload = "email=" + this.state.email + "&password=" + this.state.password;
+    fetch('http://localhost:9001/login', {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: payload
+    }).then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.hasOwnProperty('error')) {
+          console.log("Error, you entered something wrong");
+        } else {
+          localStorage.setItem('id', data.id);
+          localStorage.setItem('email', data.email);
+          localStorage.setItem('name', data.name);
+          this.props.history.push('/')
+        }
+      })
   }
 
   render() {
@@ -41,9 +60,10 @@ class Login extends React.Component {
                 type="password"
               />
             </FormGroup>
-            <Button block bsSize="large" disabled={!this.validateForm()} type="submit" className="btn-primary">
+            <Button block bsSize="large" disabled={!this.validateForm()}
+              type="submit" className="btn-primary">
               Login
-          </Button>
+            </Button>
           </form>
         </div>
       </div>
@@ -51,4 +71,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
