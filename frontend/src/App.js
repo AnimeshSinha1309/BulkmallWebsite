@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-do
 import Login from './components/Login';
 import Register from './components/Register';
 import Buy from './components/Buy';
-import Sell from './components/Sell';
-import Purchases from './components/Purchases';
 import Sales from './components/Sales';
+import Purchases from './components/Purchases';
+import Market from './components/Market';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -54,7 +54,7 @@ function App() {
           <Switch> <Route path="/register"><Register /></Route> </Switch>
           <Switch> <Route path="/buy"><Buy /></Route> </Switch>
           <Switch> <Route path="/purchases"><Purchases /></Route> </Switch>
-          <Switch> <Route path="/sell"><Sell /></Route> </Switch>
+          <Switch> <Route path="/sell"><Market /></Route> </Switch>
           <Switch> <Route path="/sales"><Sales /></Route> </Switch>
         </main>
       </div>

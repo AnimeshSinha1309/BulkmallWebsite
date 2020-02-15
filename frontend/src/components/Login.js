@@ -48,14 +48,14 @@ class Login extends React.Component {
               <FormControl
                 autoFocus
                 type="email"
-                value={this.email}
+                value={this.state.email}
                 onChange={e => this.setState({ email: e.target.value })}
               />
             </FormGroup>
             <FormGroup controlId="password" bsSize="large">
               <ControlLabel>Password</ControlLabel>
               <FormControl
-                value={this.password}
+                value={this.state.password}
                 onChange={e => this.setState({ password: e.target.value })}
                 type="password"
               />

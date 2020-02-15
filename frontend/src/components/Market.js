@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../logo.svg';
 
-class Sell extends React.Component {
+class Market extends React.Component {
   render() {
     return (
       <div className="App">
@@ -20,4 +20,4 @@ class Sell extends React.Component {
   }
 }
 
-export default Sell;
+export default Market;
