@@ -4,6 +4,7 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [pconfirm, setPconfirm] = useState("");
   const [name, setName] = useState("");
   const [type, setType] = useState("customer");
   const [gender, setGender] = useState("male");
@@ -14,17 +15,16 @@ function Register() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(email, password, name, type, gender);
+    console.log(email, password, name, type, gender, pconfirm);
     const payload = "name=" + name + "&email=" + email + "&type=" +
-      type + "&gender=" + gender + "&password=" + password;
-    fetch('http://localhost:9001/user/insert', {
+      type + "&gender=" + gender + "&password=" + password + "&pconfirm=" + pconfirm;
+    fetch('http://localhost:9001/register', {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: payload
     }).then(res => res.json())
       .then((data) => {
-        console.log(data)
-        // this.setState({ contacts: data })
+        console.log(data);
       })
       .catch(console.log)
   }
@@ -56,6 +56,14 @@ function Register() {
             <FormControl
               value={password}
               onChange={e => setPassword(e.target.value)}
+              type="password"
+            />
+          </FormGroup>
+          <FormGroup controlId="pconfirm" bsSize="large">
+            <ControlLabel>Confirm Password</ControlLabel>
+            <FormControl
+              value={pconfirm}
+              onChange={e => setPconfirm(e.target.value)}
               type="password"
             />
           </FormGroup>

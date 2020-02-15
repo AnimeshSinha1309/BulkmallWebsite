@@ -12,6 +12,7 @@ export class Controller {
   }
 
   public routes() {
+    this.app.route('/register').post(this.userService.register);
     this.app.route('/user/dummy').get(this.userService.dummyMessage);
     this.app.route('/user/list').get(this.userService.listUsers);
     this.app.route('/user/insert').post(this.userService.insertUser);
