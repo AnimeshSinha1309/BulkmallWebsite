@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import { withRouter } from 'react-router';
 
 class Login extends React.Component {
@@ -43,8 +43,8 @@ class Login extends React.Component {
       <div className="Login container">
         <div>
           <form onSubmit={this.handleSubmit} className="col-lg-5 offset-lg-4">
-            <FormGroup controlId="email" bsSize="large">
-              <ControlLabel>Email</ControlLabel>
+            <FormGroup controlId="email" variant="large">
+              <Form.Label>Email</Form.Label>
               <FormControl
                 autoFocus
                 type="email"
@@ -52,15 +52,15 @@ class Login extends React.Component {
                 onChange={e => this.setState({ email: e.target.value })}
               />
             </FormGroup>
-            <FormGroup controlId="password" bsSize="large">
-              <ControlLabel>Password</ControlLabel>
+            <FormGroup controlId="password" variant="large">
+              <Form.Label>Password</Form.Label>
               <FormControl
                 value={this.state.password}
                 onChange={e => this.setState({ password: e.target.value })}
                 type="password"
               />
             </FormGroup>
-            <Button block bsSize="large" disabled={!this.validateForm()}
+            <Button block variant="large" disabled={!this.validateForm()}
               type="submit" className="btn-primary">
               Login
             </Button>

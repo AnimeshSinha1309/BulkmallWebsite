@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import { withRouter } from 'react-router';
 
 class Buy extends React.Component {
@@ -23,7 +23,7 @@ class Buy extends React.Component {
     event.preventDefault();
     const payload = "name=" + this.state.name + "&quantity=" + this.state.quantity +
       "&remaining=" + this.state.quantity + "&sellerId" + localStorage.getItem('id') +
-      "&status=" + "selling" + "&price=" + this.state.price;
+      "&status=selling&price=" + this.state.price;
     fetch('http://localhost:9001/product/insert', {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -47,8 +47,8 @@ class Buy extends React.Component {
       <div className="Buy container">
         <div>
           <form onSubmit={this.handleSubmit} className="col-lg-5 offset-lg-4">
-            <FormGroup controlId="name" bsSize="large">
-              <ControlLabel>Name of Item</ControlLabel>
+            <FormGroup controlId="name" variant="large">
+              <Form.Label>Name of Item</Form.Label>
               <FormControl
                 autoFocus
                 type="email"
@@ -56,15 +56,15 @@ class Buy extends React.Component {
                 onChange={e => this.setState({ name: e.target.value })}
               />
             </FormGroup>
-            <FormGroup controlId="quantity" bsSize="large">
-              <ControlLabel>Number of items Purchased</ControlLabel>
+            <FormGroup controlId="quantity" variant="large">
+              <Form.Label>Number of items Purchased</Form.Label>
               <FormControl
                 value={this.state.quantity}
                 onChange={e => this.setState({ quantity: e.target.value })}
                 type="number"
               />
             </FormGroup>
-            <Button block bsSize="large" disabled={!this.validateForm()}
+            <Button block variant="large" disabled={!this.validateForm()}
               type="submit" className="btn-primary">
               Sell Item
             </Button>

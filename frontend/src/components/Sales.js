@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import { withRouter } from 'react-router';
 
 class Sales extends React.Component {
@@ -24,7 +24,7 @@ class Sales extends React.Component {
     event.preventDefault();
     const payload = "name=" + this.state.name + "&quantity=" + this.state.quantity +
       "&remaining=" + this.state.quantity + "&sellerId" + localStorage.getItem('id') +
-      "&status=" + "selling" + "&price=" + this.state.price;
+      "&status=selling&price=" + this.state.price;
     fetch('http://localhost:9001/product/insert', {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -32,14 +32,7 @@ class Sales extends React.Component {
     }).then(res => res.json())
       .then((data) => {
         console.log(data);
-        if (data.hasOwnProperty('error')) {
-          console.log("Error, you entered something wrong");
-        } else {
-          localStorage.setItem('id', data.id);
-          localStorage.setItem('price', data.email);
-          localStorage.setItem('name', data.name);
-          this.props.history.push('/')
-        }
+        this.props.history.push('/market')
       })
   }
 
@@ -48,32 +41,32 @@ class Sales extends React.Component {
       <div className="Sales container">
         <div>
           <form onSubmit={this.handleSubmit} className="col-lg-5 offset-lg-4">
-            <FormGroup controlId="name" bsSize="large">
-              <ControlLabel>Name of Item</ControlLabel>
+            <FormGroup controlId="name" variant="large">
+              <Form.Label>Name of Item</Form.Label>
               <FormControl
                 autoFocus
-                type="email"
+                type="text"
                 value={this.state.name}
                 onChange={e => this.setState({ name: e.target.value })}
               />
             </FormGroup>
-            <FormGroup controlId="price" bsSize="large">
-              <ControlLabel>Price of the Product</ControlLabel>
+            <FormGroup controlId="price" variant="large">
+              <Form.Label>Price of the Product</Form.Label>
               <FormControl
                 value={this.state.price}
                 onChange={e => this.setState({ price: e.target.value })}
                 type="number"
               />
             </FormGroup>
-            <FormGroup controlId="quantity" bsSize="large">
-              <ControlLabel>Number of items in the Bundle</ControlLabel>
+            <FormGroup controlId="quantity" variant="large">
+              <Form.Label>Number of items in the Bundle</Form.Label>
               <FormControl
                 value={this.state.quantity}
                 onChange={e => this.setState({ quantity: e.target.value })}
                 type="number"
               />
             </FormGroup>
-            <Button block bsSize="large" disabled={!this.validateForm()}
+            <Button block variant="large" disabled={!this.validateForm()}
               type="submit" className="btn-primary">
               Sell Item
             </Button>

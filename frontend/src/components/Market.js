@@ -1,20 +1,46 @@
 import React from 'react';
-import logo from '../logo.svg';
+import { Button, Card } from 'react-bootstrap';
 
 class Market extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      products: []
+    }
+    fetch('http://localhost:9001/product/list')
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({ products: data })
+      })
+  }
+
+  appendCards() {
+    let cards = []
+
+    for (const product of this.state.products) {
+      cards.push(
+        <div className="col-sm-4" style={{ display: 'inline-block' }} key={product.name}>
+          <Card style={{ width: '18rem', margin: '2rem' }}>
+            <Card.Body>
+              <Card.Title>{product.name}</Card.Title>
+              <Card.Text>
+                These are priced at Rs. {product.price} per item.&nbsp;
+                {product.remaining} items are left in this bundle.&nbsp;
+                The status on this prodct is <b>{product.status}</b>.
+              </Card.Text>
+              <Button href={"buy/product/" + product.id} variant="primary">Purchase Now</Button>
+            </Card.Body>
+          </Card>
+        </div>
+      )
+    }
+    return cards;
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-        </p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn Login
-        </a>
-        </header>
-        <h1>Body</h1>
+      <div className="container">
+        {this.appendCards()}
       </div>
     );
   }

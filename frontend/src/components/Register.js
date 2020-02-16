@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import { withRouter } from 'react-router';
 
 class Register extends React.Component {
@@ -43,8 +43,8 @@ class Register extends React.Component {
       <div className="Login container">
         <div>
           <form onSubmit={this.handleSubmit} className="col-lg-5 offset-lg-4">
-            <FormGroup controlId="name" bsSize="large">
-              <ControlLabel>Name</ControlLabel>
+            <FormGroup controlId="name" variant="large">
+              <Form.Label>Name</Form.Label>
               <FormControl
                 autoFocus
                 type="text"
@@ -52,8 +52,8 @@ class Register extends React.Component {
                 onChange={e => this.setState({ name: e.target.value })}
               />
             </FormGroup>
-            <FormGroup controlId="email" bsSize="large">
-              <ControlLabel>Email</ControlLabel>
+            <FormGroup controlId="email" variant="large">
+              <Form.Label>Email</Form.Label>
               <FormControl
                 autoFocus
                 type="email"
@@ -61,24 +61,24 @@ class Register extends React.Component {
                 onChange={e => this.setState({ email: e.target.value })}
               />
             </FormGroup>
-            <FormGroup controlId="password" bsSize="large">
-              <ControlLabel>Password</ControlLabel>
+            <FormGroup controlId="password" variant="large">
+              <Form.Label>Password</Form.Label>
               <FormControl
                 value={this.state.password}
                 onChange={e => this.setState({ password: e.target.value })}
                 type="password"
               />
             </FormGroup>
-            <FormGroup controlId="pconfirm" bsSize="large">
-              <ControlLabel>Confirm Password</ControlLabel>
+            <FormGroup controlId="pconfirm" variant="large">
+              <Form.Label>Confirm Password</Form.Label>
               <FormControl
                 value={this.state.pconfirm}
                 onChange={e => this.setState({ pconfirm: e.target.value })}
                 type="password"
               />
             </FormGroup>
-            <FormGroup controlId="gender" bsSize="large">
-              <ControlLabel>Sex</ControlLabel>
+            <FormGroup controlId="gender" variant="large">
+              <Form.Label>Sex</Form.Label>
               <FormControl
                 value={this.state.gender}
                 onChange={e => this.setState({ gender: e.target.value })}
@@ -88,8 +88,8 @@ class Register extends React.Component {
                 <option value="female">Female</option>
               </FormControl>
             </FormGroup>
-            <FormGroup controlId="type" bsSize="large">
-              <ControlLabel>User Type</ControlLabel>
+            <FormGroup controlId="type" variant="large">
+              <Form.Label>User Type</Form.Label>
               <FormControl
                 value={this.state.type}
                 onChange={e => this.setState({ type: e.target.value })}
@@ -99,7 +99,7 @@ class Register extends React.Component {
                 <option value="seller">Seller</option>
               </FormControl>
             </FormGroup>
-            <Button block bsSize="large" disabled={!this.validateForm()} type="submit" className="btn-primary">
+            <Button block variant="large" disabled={!this.validateForm()} type="submit" className="btn-primary">
               Register
           </Button>
           </form>

@@ -28,13 +28,13 @@ function App() {
                   <NavLink to="/buy" activeClassName='active' className="nav-link">Buy</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/purchases" activeClassName='active' className="nav-link">Purchases</NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink to="/sell" activeClassName='active' className="nav-link">Sell</NavLink>
-                </li>
-                <li className="nav-item">
                   <NavLink to="/sales" activeClassName='active' className="nav-link">Sales</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/market" activeClassName='active' className="nav-link">Market</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/sell" activeClassName='active' className="nav-link">Orders</NavLink>
                 </li>
               </ul>
               <ul className="navbar-nav ml-auto">
@@ -54,7 +54,7 @@ function App() {
           <Switch> <Route path="/register"><Register /></Route> </Switch>
           <Switch> <Route path="/buy"><Buy /></Route> </Switch>
           <Switch> <Route path="/purchases"><Purchases /></Route> </Switch>
-          <Switch> <Route path="/sell"><Market /></Route> </Switch>
+          <Switch> <Route path="/market"><Market /></Route> </Switch>
           <Switch> <Route path="/sales"><Sales /></Route> </Switch>
         </main>
       </div>
