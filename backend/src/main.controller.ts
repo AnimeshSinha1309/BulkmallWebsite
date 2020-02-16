@@ -40,5 +40,12 @@ export class Controller {
       .route('/review/edit/:id')
       .delete(this.reviewService.deleteReview)
       .put(this.reviewService.updateReview);
+    // Custom Queries
+    this.app
+      .route('/product/seller/')
+      .post(this.productService.listProductsBySeller);
+    this.app
+      .route('/order/buyer/')
+      .post(this.productService.listProductsBySeller);
   }
 }

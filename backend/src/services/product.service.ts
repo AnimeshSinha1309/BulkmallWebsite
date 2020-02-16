@@ -6,10 +6,6 @@ import { Product } from '../models/product.model';
 import { WELCOME_MESSAGE } from '../constants/global.constants';
 
 export class ProductService implements IProductService {
-  public dummyMessage(req: Request, res: Response) {
-    res.status(200).send(WELCOME_MESSAGE);
-  }
-
   public listProducts(req: Request, res: Response) {
     Product.find({}, (error: Error, product: MongooseDocument) => {
       if (error) {
@@ -19,7 +15,19 @@ export class ProductService implements IProductService {
     });
   }
 
+  public listProductsBySeller(req: Request, res: Response) {
+    Product.find({ sellerId: req.body.sellerId }, (error: Error, product: MongooseDocument) => {
+      if (error) {
+        res.send(error);
+      }
+      res.json(product);
+    });
+  }
+
   public insertProduct(req: Request, res: Response) {
+    if (req.body.sellerId == undefined) {
+      res.send("Please send your ID too, Authentication Error");
+    }
     const newProduct = new Product(req.body);
     newProduct.save((error: Error, product: MongooseDocument) => {
       if (error) {

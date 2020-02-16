@@ -6,10 +6,6 @@ import { Review } from '../models/review.model';
 import { WELCOME_MESSAGE } from '../constants/global.constants';
 
 export class ReviewService implements IReviewService {
-  public dummyMessage(req: Request, res: Response) {
-    res.status(200).send(WELCOME_MESSAGE);
-  }
-
   public listReviews(req: Request, res: Response) {
     Review.find({}, (error: Error, review: MongooseDocument) => {
       if (error) {

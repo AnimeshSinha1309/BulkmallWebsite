@@ -7,8 +7,6 @@ export const UserSchema = new mongoose.Schema(
     password: String,
     type: String,
     gender: String,
-    selling: Array, // List of all products user is selling (seller)
-    buying: Array, // List of all orders user is purchasing (buyer)
     rating: Number
   },
   { versionKey: false }

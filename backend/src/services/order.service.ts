@@ -6,10 +6,6 @@ import { Order } from '../models/order.model';
 import { WELCOME_MESSAGE } from '../constants/global.constants';
 
 export class OrderService implements IOrderService {
-  public dummyMessage(req: Request, res: Response) {
-    res.status(200).send(WELCOME_MESSAGE);
-  }
-
   public listOrders(req: Request, res: Response) {
     Order.find({}, (error: Error, order: MongooseDocument) => {
       if (error) {

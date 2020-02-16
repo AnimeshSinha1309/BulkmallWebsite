@@ -13,10 +13,6 @@ import { validateRegisterInput } from '../validators/register.service'
 import { validateLoginInput } from '../validators/login.service'
 
 export class UserService implements IUserService {
-  public dummyMessage(req: Request, res: Response) {
-    res.status(200).send(WELCOME_MESSAGE);
-  }
-
   public listUsers(req: Request, res: Response) {
     User.find({}, (error: Error, user: MongooseDocument) => {
       if (error) {
