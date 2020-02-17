@@ -33,6 +33,24 @@ class Orders extends React.Component {
       })
   }
 
+  clickHandlerDispatch(productId) {
+    fetch('http://localhost:9001/product/edit/' + productId, {
+      method: "PUT",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: "status=dispatched"
+    })
+    window.location.reload();
+  }
+
+  clickHandlerCancel(productId) {
+    fetch('http://localhost:9001/product/edit/' + productId, {
+      method: "PUT",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: "status=cancelled"
+    })
+    window.location.reload();
+  }
+
   appendProducts() {
     let cards = []
 
@@ -45,9 +63,21 @@ class Orders extends React.Component {
               <Card.Text>
                 These are priced at Rs. {product.price} per item.&nbsp;
                 {product.remaining} items are left in this bundle.&nbsp;
+                {product.quantity} items were originally in this bundle.&nbsp;
                 The status on this prodct is <b>{product.status}</b>.
               </Card.Text>
-              <Button href={"buy/product/" + product.id} variant="primary">Purchase Now</Button>
+              <Button variant="primary"
+                disabled={product.status !== "pending"}
+                onClick={() => this.clickHandlerDispatch(product.id)}
+                style={{ margin: '0.2rem' }}>
+                Dispatch
+              </Button>
+              <Button variant="danger"
+                disabled={product.status !== "selling" && product.status !== "pending"}
+                onClick={() => this.clickHandlerCancel(product.id)}
+                style={{ margin: '0.2rem' }}>
+                Cancel
+              </Button>
             </Card.Body>
           </Card>
         </div>

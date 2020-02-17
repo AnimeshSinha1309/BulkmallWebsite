@@ -15,7 +15,7 @@ class DetailOrder extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:9001/order/id/' + this.state.orderId, {
+    fetch('http://localhost:9001/order/id/' + this.state.idx, {
       method: "GET"
     })
       .then(res => res.json())

@@ -79,15 +79,18 @@ class App extends React.Component {
           </header>
           <main>
             {/* Call the contents of different files using the Router */}
-            <Switch> <Route path="/login"><Login /></Route> </Switch>
-            <Switch> <Route path="/register"><Register /></Route> </Switch>
-            <Switch> <Route path="/buy" exact={true}><Buy /></Route> </Switch>
-            <Switch> <Route path="/buy/:id"><Buy /></Route> </Switch>
-            <Switch> <Route path="/sales"><Sales /></Route> </Switch>
-            <Switch> <Route path="/market"><Market /></Route> </Switch>
-            <Switch> <Route path="/orders"><Orders /></Route> </Switch>
-            <Switch> <Route path="/logout"><Logout /></Route> </Switch>
-            <Switch> <Route path="/order/view/:id"><DetailOrder /></Route> </Switch>
+            <Switch>
+              <Route path="/login"><Login /></Route>
+              <Route path="/register"><Register /></Route>
+              <Route path="/buy" exact={true}><Buy /></Route>
+              <Route path="/buy/:id"><Buy /></Route>
+              <Route path="/sales"><Sales /></Route>
+              <Route path="/market"><Market /></Route>
+              <Route path="/orders"><Orders /></Route>
+              <Route path="/logout"><Logout /></Route>
+              <Route path="/order/view/:id"><DetailOrder /></Route>
+              <Route><Market /></Route>
+            </Switch>
           </main>
         </div>
       </Router>

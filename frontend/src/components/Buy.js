@@ -36,42 +36,40 @@ class Buy extends React.Component {
       .then(res => res.json())
       .then((data) => {
         this.setState({ product: data[0] })
-      })
-    // Lower the Amount Left in the Bundle
-    if (this.state.product.quantity < this.state.quantity) {
-      console.log("Not Enough Remaining!");
-      return;
-    } else if (this.state.product.quantity === this.state.quantity) {
-      fetch('http://localhost:9001/product/edit/' + this.state.name, {
-        method: "PUT",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: "quantity=0&status=pending"
-      }).then(res => res.json())
-        .then((data) => {
-          this.props.history.push('/orders')
-        })
-    } else if (this.state.product.quantity > this.state.quantity) {
-      fetch('http://localhost:9001/product/edit/' + this.state.name, {
-        method: "PUT",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: "quantity=" + (this.state.product.quantity - this.state.quantity).toString()
-      }).then(res => res.json())
-        .then((data) => {
-          this.props.history.push('/orders')
-        })
-    }
-    // Insert the Order in the Table
-    const payload = "productId=" + this.state.name + "&quantity=" + this.state.quantity +
-      "&userId=" + localStorage.getItem('id');
-    fetch('http://localhost:9001/order/insert', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: payload
-    }).then(res => res.json())
-      .then((data) => {
-        if (data.hasOwnProperty('error')) {
-          console.log("Error, you entered something wrong");
+        // Lower the Amount Left in the Bundle
+        if (this.state.product.remaining < parseInt(this.state.quantity)) {
+          console.log("Not Enough Remaining!");
+          return;
+        } else if (this.state.product.remaining === parseInt(this.state.quantity)) {
+          fetch('http://localhost:9001/product/edit/' + this.state.name, {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: "remaining=0&status=pending"
+          }).then(res => res.json())
+            .then((data) => {
+              this.props.history.push('/orders')
+            })
+        } else if (this.state.product.remaining > parseInt(this.state.quantity)) {
+          fetch('http://localhost:9001/product/edit/' + this.state.name, {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: "remaining=" + (this.state.product.remaining - this.state.quantity).toString()
+          }).then(res => res.json())
+            .then((data) => {
+              this.props.history.push('/orders')
+            })
         }
+        // Insert the Order in the Table
+        const payload = "productId=" + this.state.name + "&quantity=" + this.state.quantity +
+          "&userId=" + localStorage.getItem('id');
+        fetch('http://localhost:9001/order/insert', {
+          method: "POST",
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: payload
+        }).then(res => res.json())
+          .then((data) => {
+            this.props.history.push('/orders')
+          })
       })
   }
 
