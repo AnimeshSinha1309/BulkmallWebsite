@@ -63,7 +63,7 @@ export class OrderService implements IOrderService {
   };
 
   public detailOrderById(req: Request, res: Response) {
-    Order.find({ id: req.params.orderId })
+    Order.find({ _id: req.params.orderId })
       .populate({ path: 'productId', populate: { path: 'sellerId', model: 'User' } })
       .populate('userId')
       .then((order: MongooseDocument[]) => {

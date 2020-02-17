@@ -10,11 +10,14 @@ class Buy extends React.Component {
     this.state = {
       name: "",
       quantity: 0,
-      lockdown: false
+      lockdown: false,
+      product: {}
     }
+  }
+
+  componentDidMount() {
     if (this.props.hasOwnProperty('match')) {
-      this.state.name = this.props.match.params.id;
-      this.state.lockdown = true;
+      this.setState({ name: this.props.match.params.id, lockdown: true });
     }
     this.validateForm = this.validateForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,10 +29,41 @@ class Buy extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const payload = "name=" + this.state.name + "&quantity=" + this.state.quantity +
-      "&remaining=" + this.state.quantity + "&sellerId" + localStorage.getItem('id') +
-      "&status=selling&price=" + this.state.price;
-    fetch('http://localhost:9001/product/insert', {
+    // Get the Details of the Object being Purchased
+    fetch('http://localhost:9001/product/id/' + this.state.name, {
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({ product: data[0] })
+      })
+    // Lower the Amount Left in the Bundle
+    if (this.state.product.quantity < this.state.quantity) {
+      console.log("Not Enough Remaining!");
+      return;
+    } else if (this.state.product.quantity === this.state.quantity) {
+      fetch('http://localhost:9001/product/edit/' + this.state.name, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: "quantity=0&status=pending"
+      }).then(res => res.json())
+        .then((data) => {
+          this.props.history.push('/orders')
+        })
+    } else if (this.state.product.quantity > this.state.quantity) {
+      fetch('http://localhost:9001/product/edit/' + this.state.name, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: "quantity=" + (this.state.product.quantity - this.state.quantity).toString()
+      }).then(res => res.json())
+        .then((data) => {
+          this.props.history.push('/orders')
+        })
+    }
+    // Insert the Order in the Table
+    const payload = "productId=" + this.state.name + "&quantity=" + this.state.quantity +
+      "&userId=" + localStorage.getItem('id');
+    fetch('http://localhost:9001/order/insert', {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: payload
@@ -37,11 +71,6 @@ class Buy extends React.Component {
       .then((data) => {
         if (data.hasOwnProperty('error')) {
           console.log("Error, you entered something wrong");
-        } else {
-          localStorage.setItem('id', data.id);
-          localStorage.setItem('price', data.email);
-          localStorage.setItem('name', data.name);
-          this.props.history.push('/')
         }
       })
   }

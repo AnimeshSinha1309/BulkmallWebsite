@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 class Orders extends React.Component {
   constructor(props) {
     super(props)
+    if (localStorage.getItem('id') === null)
+      this.props.history.push('/login');
     this.state = {
       products: [],
       orders: [],

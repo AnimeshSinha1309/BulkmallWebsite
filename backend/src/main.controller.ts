@@ -48,6 +48,9 @@ export class Controller {
       .route('/order/detail/')
       .post(this.orderService.detailOrder);
     this.app
+      .route('/product/id/:id')
+      .get(this.productService.detailProductById);
+    this.app
       .route('/order/id/:id')
       .get(this.orderService.detailOrderById);
   }

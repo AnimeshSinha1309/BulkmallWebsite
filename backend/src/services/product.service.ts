@@ -64,4 +64,11 @@ export class ProductService implements IProductService {
       }
     );
   }
+
+  public detailProductById(req: Request, res: Response) {
+    Product.find({ _id: req.params.id })
+      .then((order: MongooseDocument[]) => {
+        res.json(order);
+      });
+  };
 }
