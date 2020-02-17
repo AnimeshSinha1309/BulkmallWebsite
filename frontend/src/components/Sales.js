@@ -43,7 +43,7 @@ class Sales extends React.Component {
         <div>
           <form onSubmit={this.handleSubmit} className="col-lg-5 offset-lg-4">
             <FormGroup controlId="name" variant="large">
-              <Form.Label>Name of Item</Form.Label>
+              <Form.Label>Name of the Product</Form.Label>
               <FormControl
                 autoFocus
                 type="text"

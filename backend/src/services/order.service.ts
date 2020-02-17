@@ -1,9 +1,10 @@
-import { Document, Mongoose, MongooseDocument } from 'mongoose';
+import { MongooseDocument } from 'mongoose';
 import { Request, Response } from 'express';
 
 import { IOrderService } from '../interfaces/order-service.interface';
 import { Order } from '../models/order.model';
-import { WELCOME_MESSAGE } from '../constants/global.constants';
+import { Product } from '../models/product.model';
+import async from "async";
 
 export class OrderService implements IOrderService {
   public listOrders(req: Request, res: Response) {
@@ -52,4 +53,21 @@ export class OrderService implements IOrderService {
       }
     );
   }
+
+  public detailOrder(req: Request, res: Response) {
+    Order.find({ userId: req.body.userId })
+      .populate('productId')
+      .then((order: MongooseDocument[]) => {
+        res.json(order);
+      });
+  };
+
+  public detailOrderById(req: Request, res: Response) {
+    Order.find({ id: req.params.orderId })
+      .populate({ path: 'productId', populate: { path: 'sellerId', model: 'User' } })
+      .populate('userId')
+      .then((order: MongooseDocument[]) => {
+        res.json(order);
+      });
+  };
 }

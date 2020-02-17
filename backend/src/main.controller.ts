@@ -45,7 +45,10 @@ export class Controller {
       .route('/product/seller/')
       .post(this.productService.listProductsBySeller);
     this.app
-      .route('/order/buyer/')
-      .post(this.productService.listProductsBySeller);
+      .route('/order/detail/')
+      .post(this.orderService.detailOrder);
+    this.app
+      .route('/order/id/:id')
+      .get(this.orderService.detailOrderById);
   }
 }

@@ -8,9 +8,10 @@ class Buy extends React.Component {
     if (localStorage.getItem('id') === null)
       this.props.history.push('/login');
     this.state = {
-      item_id: "",
+      name: "",
       quantity: 0
     }
+    this.state.name = this.param.id;
     this.validateForm = this.validateForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }

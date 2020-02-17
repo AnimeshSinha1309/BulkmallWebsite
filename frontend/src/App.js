@@ -6,13 +6,14 @@ import Buy from './components/Buy';
 import Sales from './components/Sales';
 import Market from './components/Market';
 import Orders from './components/Orders';
+import DetailOrder from './components/Detail';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    if (localStorage.getItem('id') == undefined) {
+    if (localStorage.getItem('id') === undefined) {
       localStorage.removeItem('id');
       localStorage.removeItem('name');
       localStorage.removeItem('email');
@@ -83,6 +84,7 @@ class App extends React.Component {
             <Switch> <Route path="/sales"><Sales /></Route> </Switch>
             <Switch> <Route path="/market"><Market /></Route> </Switch>
             <Switch> <Route path="/orders"><Orders /></Route> </Switch>
+            <Switch> <Route path="/order/view/:id"><DetailOrder /></Route> </Switch>
           </main>
         </div>
       </Router>
