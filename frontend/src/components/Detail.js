@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Form, FormGroup, FormControl } from "react-bootstrap";
 import { withRouter } from 'react-router';
 
 class DetailOrder extends React.Component {
@@ -7,7 +7,10 @@ class DetailOrder extends React.Component {
     super(props)
     this.state = {
       idx: this.props.match.params.id,
-      loaded: false
+      loaded: false,
+      rating: 0,
+      review: "",
+      quantity: 0
     }
   }
 
@@ -19,6 +22,7 @@ class DetailOrder extends React.Component {
       .then((data) => {
         this.setState({ order: data[0] })
         this.setState({ loaded: true })
+        this.setState({ quantity: data[0].quantity })
       })
   }
 
@@ -57,6 +61,74 @@ class DetailOrder extends React.Component {
     } else { return (<div></div>) }
   }
 
+  appendRatingsForm() {
+    return (
+      <div className="container" style={{ margin: '10px' }}>
+        <form onSubmit={this.handleSubmit} className="col-sm-10 offset-sm-1">
+          <FormGroup controlId="rating" variant="large">
+            <Form.Label>Seller Rating</Form.Label>
+            <FormControl
+              type="number"
+              min="1"
+              max="5"
+              value={this.state.rating}
+              onChange={e => this.setState({ rating: e.target.value })}
+            />
+          </FormGroup>
+          <Button block variant="large"
+            type="submit" className="btn-primary">
+            Set Rating
+          </Button>
+        </form>
+      </div >
+    )
+  }
+
+  appendReviewsForm() {
+    return (
+      <div className="container" style={{ margin: '10px' }}>
+        <form onSubmit={this.handleSubmit} className="col-sm-10 offset-sm-1">
+          <FormGroup controlId="review" variant="large">
+            <Form.Label>Product Reviews</Form.Label>
+            <FormControl
+              as="textarea"
+              rows="4"
+              value={this.state.review}
+              onChange={e => this.setState({ review: e.target.value })}
+            />
+          </FormGroup>
+          <Button block variant="large"
+            type="submit" className="btn-primary">
+            Send Review
+          </Button>
+        </form>
+      </div >
+    )
+  }
+
+  appendEditForm() {
+    return (
+      <div className="container" style={{ margin: '10px' }}>
+        <form onSubmit={this.handleSubmit} className="col-sm-10 offset-sm-1">
+          <FormGroup controlId="rating" variant="large">
+            <Form.Label>Order Quantity</Form.Label>
+            <FormControl
+              type="number"
+              min="1"
+              max="100"
+              value={this.state.quantity}
+              onChange={e => this.setState({ quantity: e.target.value })}
+            />
+          </FormGroup>
+          <Button block variant="large"
+            type="submit" className="btn-warning">
+            Update Order
+          </Button>
+        </form>
+      </div >
+    )
+  }
+
   render() {
     return (
       <div>
@@ -65,7 +137,13 @@ class DetailOrder extends React.Component {
           {this.appendDetails()}
         </div>
         <div className="container">
-          <h2 style={{ margin: '2rem 2rem 0rem' }}>My Orders</h2>
+          <h2 style={{ margin: '2rem 2rem 0rem' }}>Ratings and Reviews</h2>
+          {this.appendRatingsForm()}
+          {this.appendReviewsForm()}
+        </div>
+        <div className="container">
+          <h2 style={{ margin: '2rem 2rem 0rem' }}>Change your Order</h2>
+          {this.appendEditForm()}
         </div>
       </div>
     );

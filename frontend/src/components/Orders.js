@@ -20,7 +20,6 @@ class Orders extends React.Component {
         this.setState({ products: data })
       })
     const payload2 = "userId=" + localStorage.getItem('id');
-    console.log(payload2);
     fetch('http://localhost:9001/order/detail', {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -28,7 +27,6 @@ class Orders extends React.Component {
     })
       .then(res => res.json())
       .then((data) => {
-        console.log(data);
         this.setState({ orders: data })
       })
   }

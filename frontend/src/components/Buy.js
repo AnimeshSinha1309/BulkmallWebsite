@@ -9,15 +9,19 @@ class Buy extends React.Component {
       this.props.history.push('/login');
     this.state = {
       name: "",
-      quantity: 0
+      quantity: 0,
+      lockdown: false
     }
-    this.state.name = this.param.id;
+    if (this.props.hasOwnProperty('match')) {
+      this.state.name = this.props.match.params.id;
+      this.state.lockdown = true;
+    }
     this.validateForm = this.validateForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
-    return this.state.quantity > 0 && this.state.price >= 0 && this.state.name.length > 0;
+    return this.state.quantity > 0 && this.state.name.length > 0;
   }
 
   handleSubmit(event) {
@@ -31,7 +35,6 @@ class Buy extends React.Component {
       body: payload
     }).then(res => res.json())
       .then((data) => {
-        console.log(data);
         if (data.hasOwnProperty('error')) {
           console.log("Error, you entered something wrong");
         } else {
@@ -49,12 +52,13 @@ class Buy extends React.Component {
         <div>
           <form onSubmit={this.handleSubmit} className="col-lg-5 offset-lg-4">
             <FormGroup controlId="name" variant="large">
-              <Form.Label>Name of Item</Form.Label>
+              <Form.Label>Product Id of Item</Form.Label>
               <FormControl
                 autoFocus
                 type="email"
                 value={this.state.name}
                 onChange={e => this.setState({ name: e.target.value })}
+                disabled={this.state.lockdown}
               />
             </FormGroup>
             <FormGroup controlId="quantity" variant="large">
@@ -67,7 +71,7 @@ class Buy extends React.Component {
             </FormGroup>
             <Button block variant="large" disabled={!this.validateForm()}
               type="submit" className="btn-primary">
-              Sell Item
+              Buy Item
             </Button>
           </form>
         </div>

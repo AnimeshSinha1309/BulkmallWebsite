@@ -26,7 +26,6 @@ class Purchases extends React.Component {
       body: payload
     }).then(res => res.json())
       .then((data) => {
-        console.log(data);
         if (data.hasOwnProperty('error')) {
           console.log("Error, you entered something wrong");
         } else {

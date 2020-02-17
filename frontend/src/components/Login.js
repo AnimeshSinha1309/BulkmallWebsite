@@ -26,14 +26,14 @@ class Login extends React.Component {
       body: payload
     }).then(res => res.json())
       .then((data) => {
-        console.log(data);
         if (data.hasOwnProperty('error')) {
           console.log("Error, you entered something wrong");
         } else {
           localStorage.setItem('id', data.id);
           localStorage.setItem('email', data.email);
           localStorage.setItem('name', data.name);
-          this.props.history.push('/')
+          this.props.history.push('/market');
+          window.location.reload();
         }
       })
   }

@@ -25,14 +25,12 @@ class Sales extends React.Component {
     const payload = "name=" + this.state.name + "&quantity=" + this.state.quantity +
       "&remaining=" + this.state.quantity + "&sellerId=" + localStorage.getItem('id') +
       "&status=selling&price=" + this.state.price;
-    console.log(payload);
     fetch('http://localhost:9001/product/insert', {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: payload
     }).then(res => res.json())
       .then((data) => {
-        console.log(data);
         this.props.history.push('/market')
       })
   }

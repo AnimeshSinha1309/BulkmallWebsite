@@ -28,7 +28,7 @@ class Market extends React.Component {
                 {product.remaining} items are left in this bundle.&nbsp;
                 The status on this prodct is <b>{product.status}</b>.
               </Card.Text>
-              <Button href={"buy/product/" + product.id} variant="primary">Purchase Now</Button>
+              <Button href={"buy/" + product.id} variant="primary">Purchase Now</Button>
             </Card.Body>
           </Card>
         </div>

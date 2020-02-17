@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Register from './components/Register';
 import Buy from './components/Buy';
 import Sales from './components/Sales';
@@ -57,7 +58,7 @@ class App extends React.Component {
               <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
                   <li className="nav-item">
-                    <NavLink to="/" exact={true} activeClassName='active' className="nav-link">Home</NavLink>
+                    <NavLink to="#" className="nav-link active">BulkMall</NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/buy" activeClassName='active' className="nav-link">Buy</NavLink>
@@ -80,10 +81,12 @@ class App extends React.Component {
             {/* Call the contents of different files using the Router */}
             <Switch> <Route path="/login"><Login /></Route> </Switch>
             <Switch> <Route path="/register"><Register /></Route> </Switch>
-            <Switch> <Route path="/buy"><Buy /></Route> </Switch>
+            <Switch> <Route path="/buy" exact={true}><Buy /></Route> </Switch>
+            <Switch> <Route path="/buy/:id"><Buy /></Route> </Switch>
             <Switch> <Route path="/sales"><Sales /></Route> </Switch>
             <Switch> <Route path="/market"><Market /></Route> </Switch>
             <Switch> <Route path="/orders"><Orders /></Route> </Switch>
+            <Switch> <Route path="/logout"><Logout /></Route> </Switch>
             <Switch> <Route path="/order/view/:id"><DetailOrder /></Route> </Switch>
           </main>
         </div>

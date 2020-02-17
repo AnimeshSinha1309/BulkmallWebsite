@@ -32,7 +32,6 @@ class Register extends React.Component {
       body: payload
     }).then(res => res.json())
       .then((data) => {
-        console.log(data);
         this.props.history.push('/login')
       })
       .catch(console.log)
