@@ -136,4 +136,21 @@ export class UserService implements IUserService {
       });
     });
   }
+
+  public pushRating(req: Request, res: Response) {
+    const userId = req.params.id;
+    User.findByIdAndUpdate(
+      userId,
+      { $push: { review: req.body.rating } },
+      (error: Error, product: any) => {
+        if (error) {
+          res.send(error);
+        }
+        const message = product
+          ? 'Updated successfully'
+          : 'Product not found :(';
+        res.send(message);
+      }
+    );
+  }
 }

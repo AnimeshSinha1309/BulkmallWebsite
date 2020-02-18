@@ -45,5 +45,12 @@ export class Controller {
     this.app
       .route('/order/id/:id')
       .get(this.orderService.detailOrderById);
+    // Push in ratings and reviews
+    this.app
+      .route('/product/review/:id')
+      .post(this.productService.pushReview)
+    this.app
+      .route('/user/rating/:id')
+      .post(this.userService.pushRating)
   }
 }

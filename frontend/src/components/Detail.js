@@ -127,8 +127,12 @@ class DetailOrder extends React.Component {
             Update Order
           </Button>
         </form>
-      </div >
+      </div>
     )
+  }
+
+  submitReview(text) {
+
   }
 
   render() {

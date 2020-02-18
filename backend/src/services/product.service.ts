@@ -77,7 +77,7 @@ export class ProductService implements IProductService {
     const productId = req.params.id;
     Product.findByIdAndUpdate(
       productId,
-      req.body,
+      { $push: { review: req.body.review } },
       (error: Error, product: any) => {
         if (error) {
           res.send(error);

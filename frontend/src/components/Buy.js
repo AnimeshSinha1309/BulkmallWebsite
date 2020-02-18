@@ -87,9 +87,11 @@ class Buy extends React.Component {
   }
 
   getReviews() {
-    const reviews = []
+    const reviews = [];
+    var i = 0;
     for (const review of this.state.product.review) {
-      reviews.push(<div>{review}</div>)
+      i = i + 1;
+      reviews.push(<div key={i}>{review}</div>)
     }
     return reviews;
   }

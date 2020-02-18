@@ -7,4 +7,5 @@ export interface IUserService {
   updateUser(req: Request, res: Response): void;
   register(req: Request, res: Response): void;
   login(req: Request, res: Response): void;
+  pushRating(req: Request, res: Response): void;
 }

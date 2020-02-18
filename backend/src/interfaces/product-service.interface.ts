@@ -7,4 +7,5 @@ export interface IProductService {
   updateProduct(req: Request, res: Response): void;
   listProductsBySeller(req: Request, res: Response): void;
   detailProductById(req: Request, res: Response): void;
+  pushReview(req: Request, res: Response): void;
 }
