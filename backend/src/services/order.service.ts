@@ -3,8 +3,6 @@ import { Request, Response } from 'express';
 
 import { IOrderService } from '../interfaces/order-service.interface';
 import { Order } from '../models/order.model';
-import { Product } from '../models/product.model';
-import async from "async";
 
 export class OrderService implements IOrderService {
   public listOrders(req: Request, res: Response) {

@@ -7,7 +7,7 @@ export const UserSchema = new mongoose.Schema(
     password: String,
     type: String,
     gender: String,
-    reviews: [String]
+    ratings: [Number]
   },
   { versionKey: false }
 );

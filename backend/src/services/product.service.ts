@@ -67,8 +67,26 @@ export class ProductService implements IProductService {
 
   public detailProductById(req: Request, res: Response) {
     Product.find({ _id: req.params.id })
+      .populate('sellerId')
       .then((order: MongooseDocument[]) => {
         res.json(order);
       });
   };
+
+  public pushReview(req: Request, res: Response) {
+    const productId = req.params.id;
+    Product.findByIdAndUpdate(
+      productId,
+      req.body,
+      (error: Error, product: any) => {
+        if (error) {
+          res.send(error);
+        }
+        const message = product
+          ? 'Updated successfully'
+          : 'Product not found :(';
+        res.send(message);
+      }
+    );
+  }
 }

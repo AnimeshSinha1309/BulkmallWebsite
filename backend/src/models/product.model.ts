@@ -5,10 +5,10 @@ export const ProductSchema = new mongoose.Schema(
     name: String,
     quantity: Number,
     remaining: Number,
-    sellerId: String,
+    sellerId: { type: Schema.Types.ObjectId, ref: 'User' },
     status: String,
     price: Number,
-    rating: [Number],
+    review: [String],
   },
   { versionKey: false }
 );
