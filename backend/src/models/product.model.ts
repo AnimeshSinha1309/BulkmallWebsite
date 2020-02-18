@@ -7,7 +7,8 @@ export const ProductSchema = new mongoose.Schema(
     remaining: Number,
     sellerId: String,
     status: String,
-    price: Number
+    price: Number,
+    rating: [Number],
   },
   { versionKey: false }
 );

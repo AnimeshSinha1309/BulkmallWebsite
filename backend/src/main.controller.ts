@@ -2,12 +2,10 @@ import { Application } from 'express';
 import { IUserService } from './interfaces/user-service.interface';
 import { IOrderService } from './interfaces/order-service.interface';
 import { IProductService } from './interfaces/product-service.interface';
-import { IReviewService } from './interfaces/review-service.interface';
 
 export class Controller {
   constructor(private app: Application, private userService: IUserService,
-    private orderService: IOrderService, private reviewService: IReviewService,
-    private productService: IProductService) {
+    private orderService: IOrderService, private productService: IProductService) {
     this.routes();
   }
 
@@ -34,12 +32,6 @@ export class Controller {
       .route('/order/edit/:id')
       .delete(this.orderService.deleteOrder)
       .put(this.orderService.updateOrder);
-    this.app.route('/review/list').get(this.reviewService.listReviews);
-    this.app.route('/review/insert').post(this.reviewService.insertReview);
-    this.app
-      .route('/review/edit/:id')
-      .delete(this.reviewService.deleteReview)
-      .put(this.reviewService.updateReview);
     // Custom Queries
     this.app
       .route('/product/seller/')

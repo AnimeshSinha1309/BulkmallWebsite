@@ -8,23 +8,23 @@ class Buy extends React.Component {
     if (localStorage.getItem('id') === null)
       this.props.history.push('/login');
     this.state = {
-      name: "",
+      name: " ",
       quantity: 0,
-      lockdown: false,
+      valid: false,
       product: {}
     }
   }
 
   componentDidMount() {
-    if (this.props.hasOwnProperty('match')) {
-      this.setState({ name: this.props.match.params.id, lockdown: true });
+    if (this.props.hasOwnProperty('match') && this.props.match.params.hasOwnProperty('id')) {
+      this.setState({ name: this.props.match.params.id, valid: true });
     }
     this.validateForm = this.validateForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
-    return this.state.quantity > 0 && this.state.name.length > 0;
+    return this.state.quantity > 0 && this.state.name.length > 1;
   }
 
   handleSubmit(event) {
@@ -74,6 +74,14 @@ class Buy extends React.Component {
   }
 
   render() {
+    if (this.state.valid === false)
+      return (
+        <div className="container text-center">
+          <h1 style={{ margin: '2rem' }}>Please Find an Item from the Market</h1>
+          <p>This purchse page is only accessible with a valid product.
+            You can search for these products in the Market tab.</p>
+        </div>
+      )
     return (
       <div className="Buy container">
         <div>
@@ -82,16 +90,15 @@ class Buy extends React.Component {
               <Form.Label>Product Id of Item</Form.Label>
               <FormControl
                 autoFocus
-                type="email"
+                type="text"
                 value={this.state.name}
-                onChange={e => this.setState({ name: e.target.value })}
-                disabled={this.state.lockdown}
+                disabled={true}
               />
             </FormGroup>
             <FormGroup controlId="quantity" variant="large">
               <Form.Label>Number of items Purchased</Form.Label>
               <FormControl
-                value={this.state.quantity}
+                min="0"
                 onChange={e => this.setState({ quantity: e.target.value })}
                 type="number"
               />

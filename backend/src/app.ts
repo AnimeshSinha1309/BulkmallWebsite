@@ -1,7 +1,6 @@
 import { Application } from 'express';
 import { Controller } from './main.controller';
 import { UserService } from './services/user.service';
-import { ReviewService } from './services/review.service';
 import { OrderService } from './services/order.service';
 import { ProductService } from './services/product.service';
 import bodyParser from 'body-parser';
@@ -21,7 +20,7 @@ class App {
     this._setMongoConfig();
 
     this.userController = new Controller(this.app, new UserService(),
-      new OrderService(), new ReviewService(), new ProductService());
+      new OrderService(), new ProductService());
   }
 
   private _setConfig() {

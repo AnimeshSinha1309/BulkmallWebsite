@@ -85,25 +85,27 @@ class DetailOrder extends React.Component {
   }
 
   appendReviewsForm() {
-    return (
-      <div className="container" style={{ margin: '10px' }}>
-        <form onSubmit={this.handleSubmit} className="col-sm-10 offset-sm-1">
-          <FormGroup controlId="review" variant="large">
-            <Form.Label>Product Reviews</Form.Label>
-            <FormControl
-              as="textarea"
-              rows="4"
-              value={this.state.review}
-              onChange={e => this.setState({ review: e.target.value })}
-            />
-          </FormGroup>
-          <Button block variant="large"
-            type="submit" className="btn-primary">
-            Send Review
+    if (this.state.loaded === true && this.state.order.status === "dispatched") {
+      return (
+        <div className="container" style={{ margin: '10px' }}>
+          <form onSubmit={this.handleSubmit} className="col-sm-10 offset-sm-1">
+            <FormGroup controlId="review" variant="large">
+              <Form.Label>Product Reviews</Form.Label>
+              <FormControl
+                as="textarea"
+                rows="4"
+                value={this.state.review}
+                onChange={e => this.setState({ review: e.target.value })}
+              />
+            </FormGroup>
+            <Button block variant="large"
+              type="submit" className="btn-primary">
+              Send Review
           </Button>
-        </form>
-      </div >
-    )
+          </form>
+        </div >
+      )
+    }
   }
 
   appendEditForm() {
