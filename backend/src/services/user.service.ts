@@ -141,7 +141,7 @@ export class UserService implements IUserService {
     const userId = req.params.id;
     User.findByIdAndUpdate(
       userId,
-      { $push: { review: req.body.rating } },
+      { $push: { ratings: req.body.rating } },
       (error: Error, product: any) => {
         if (error) {
           res.send(error);

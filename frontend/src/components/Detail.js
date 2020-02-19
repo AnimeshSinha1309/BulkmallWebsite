@@ -10,8 +10,11 @@ class DetailOrder extends React.Component {
       loaded: false,
       rating: 0,
       review: "",
-      quantity: 0
+      quantity: 0,
+      order: {}
     }
+    this.submitReview = this.submitReview.bind(this);
+    this.submitRating = this.submitRating.bind(this);
   }
 
   componentDidMount() {
@@ -64,7 +67,7 @@ class DetailOrder extends React.Component {
   appendRatingsForm() {
     return (
       <div className="container" style={{ margin: '10px' }}>
-        <form onSubmit={this.handleSubmit} className="col-sm-10 offset-sm-1">
+        <form onSubmit={this.submitRating} className="col-sm-10 offset-sm-1">
           <FormGroup controlId="rating" variant="large">
             <Form.Label>Seller Rating</Form.Label>
             <FormControl
@@ -88,7 +91,7 @@ class DetailOrder extends React.Component {
     if (this.state.loaded === true && this.state.order.status === "dispatched") {
       return (
         <div className="container" style={{ margin: '10px' }}>
-          <form onSubmit={this.handleSubmit} className="col-sm-10 offset-sm-1">
+          <form onSubmit={this.submitReview} className="col-sm-10 offset-sm-1">
             <FormGroup controlId="review" variant="large">
               <Form.Label>Product Reviews</Form.Label>
               <FormControl
@@ -111,8 +114,8 @@ class DetailOrder extends React.Component {
   appendEditForm() {
     return (
       <div className="container" style={{ margin: '10px' }}>
-        <form onSubmit={this.handleSubmit} className="col-sm-10 offset-sm-1">
-          <FormGroup controlId="rating" variant="large">
+        <form onSubmit={this.updateAmount} className="col-sm-10 offset-sm-1">
+          <FormGroup controlId="quantity" variant="large">
             <Form.Label>Order Quantity</Form.Label>
             <FormControl
               type="number"
@@ -131,8 +134,35 @@ class DetailOrder extends React.Component {
     )
   }
 
-  submitReview(text) {
+  submitReview(event) {
+    event.preventDefault();
+    fetch('http://localhost:9001/product/review/' + this.state.order.productId.id, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: "review=" + this.state.review
+    });
+  }
 
+  submitRating(event) {
+    event.preventDefault();
+    fetch('http://localhost:9001/user/rating/' + this.state.order.productId.sellerId.id, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: "rating=" + this.state.rating
+    });
+  }
+
+  updateAmount() {
+    fetch('http://localhost:9001/product/edit/' + this.order.productId.id, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: "remaining=" + this.order.productId.remaining - (this.state.quantity - this.order.quantity)
+    });
+    fetch('http://localhost:9001/order/edit' + this.order.id, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: "quantity=" + this.order.quantity
+    })
   }
 
   render() {
