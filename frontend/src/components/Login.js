@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, FormGroup, FormControl, Form } from "react-bootstrap";
 import { withRouter } from 'react-router';
+import { GoogleAPI, GoogleLogin, GoogleLogout } from 'react-google-oauth'
 
 class Login extends React.Component {
   constructor(props) {
@@ -38,11 +39,15 @@ class Login extends React.Component {
       })
   }
 
+  googleSignin() {
+
+  }
+
   render() {
     return (
       <div className="Login container">
-        <div>
-          <form onSubmit={this.handleSubmit} className="col-lg-5 offset-lg-4">
+        <div className="text-center">
+          <form onSubmit={this.handleSubmit} class="col-lg-6 offset-lg-3">
             <FormGroup controlId="email" variant="large">
               <Form.Label>Email</Form.Label>
               <FormControl
@@ -65,6 +70,14 @@ class Login extends React.Component {
               Login
             </Button>
           </form>
+        </div>
+        <div className="text-center" style={{ margin: '3rem' }}>
+          <GoogleAPI clientId="35508760356-9jirg2hcdds440ev8m41saqckifc9oio.apps.googleusercontent.com"
+            onUpdateSigninStatus={this.googleSignin} >
+            <div>
+              <div><GoogleLogin /></div>
+            </div>
+          </GoogleAPI>
         </div>
       </div>
     );
